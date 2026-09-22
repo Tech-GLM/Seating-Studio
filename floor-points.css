@@ -1,0 +1,17 @@
+/* Shared physical floor anchors: a different visual language from the student desks. */
+.floor-tools{margin:-3px 0 19px;padding:17px 23px;background:#fff8e9;border:1px solid #e9d8b6;border-radius:17px}
+.floor-intro{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.floor-intro h2{font-size:18px;margin:4px 0}.floor-intro p{color:#806a45;font-size:12px;line-height:1.5;margin:6px 0}
+.floor-shared{white-space:nowrap;color:#86633f;background:#faeacb;border-radius:20px;padding:8px 12px;font-weight:800;font-size:11px}
+.floor-controls{display:flex;align-items:end;flex-wrap:wrap;gap:9px;margin-top:10px}.floor-controls label{display:flex;flex-direction:column;gap:5px;color:#745b3a;font-size:11px;font-weight:800}
+.floor-controls select{min-height:40px;padding:8px 10px;border-radius:9px;border:1px solid #d6bb8f;background:#fff;color:#634725;font:inherit}
+.floor-controls .button{white-space:nowrap}.floor-controls .button:focus-visible,.floor-reference:focus-visible{outline:3px solid #ca8e3d;outline-offset:3px}
+.floor-help{color:#826f4c;font-size:11px;line-height:1.5;margin:9px 0 0}.floor-reference-layer{position:absolute;inset:0;pointer-events:none;z-index:1}
+.floor-reference{position:absolute;transform:translate(-50%,-50%);width:clamp(21px,2.9vw,34px);height:clamp(21px,2.9vw,34px);border:3px solid #8d5226;border-radius:50%;background:#ffdfa7;color:#572d0c;display:grid;place-items:center;font-size:clamp(10px,1vw,14px);font-weight:950;box-shadow:0 0 0 3px #fffbe6b8;pointer-events:none;padding:0}
+.room .desk{z-index:2}.room .board,.room .door{z-index:3}.room.floor-mode .floor-reference{pointer-events:auto;cursor:grab;touch-action:none;box-shadow:0 0 0 7px #f3ae4977}
+.room.floor-mode .floor-reference.moving{z-index:6;cursor:grabbing;background:#ffbd69}.room.floor-mode .desk{pointer-events:none;opacity:.72}
+.floor-reference-key{display:flex;align-items:center;flex-wrap:wrap;gap:7px 12px;margin:2px 23px 14px;color:#765e3d;font-size:10px;line-height:1.5}
+.floor-key-lead{font-size:10px;font-weight:900;letter-spacing:.08em}.floor-key-entry{display:inline-flex;gap:4px;align-items:center;white-space:nowrap}.floor-key-entry strong{display:grid;place-items:center;background:#ffdfa7;color:#704011;border:1px solid #b87f41;border-radius:50%;width:19px;height:19px;font-size:10px}
+#moveDesksBtn:disabled{opacity:.55;cursor:not-allowed}
+@media(max-width:760px){.floor-intro{flex-direction:column;align-items:flex-start}.floor-shared{white-space:normal}.floor-tools{padding:13px}.floor-reference-key{margin:3px 10px 15px}}
+@media print{.floor-tools{display:none!important}.floor-reference{width:24px;height:24px;font-size:12px;border-width:2px;box-shadow:none;-webkit-print-color-adjust:exact;print-color-adjust:exact}.floor-reference-key{font-size:10px;margin:2mm 0 0}.floor-key-entry strong{width:16px;height:16px}.room.floor-mode .desk{opacity:1}}
