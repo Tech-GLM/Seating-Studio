@@ -5,8 +5,8 @@
 (() => {
   const updated = {
     '9A': ['Isabella','Martin','Maria Adelaida','Lucas','Matias','Alejandro','Samuel','David','Emilia','Maria Camila','Juana','Juliana','Pablo','Lorenzo','Juan Sebastian','Maria Jose','Mariana','Juan Jose','Sofia','Maria Del Rosario'],
-    '9B': ['Antonia C','Elena','Samuel','Maria Antonia','Antonia G','Santiago','Julieta','Gabriela','Jose Jacobo','Antonia A','Mariana','Matías','Valentina','Juana','Salomon','Jacobo O','Sofia','Jacobo P','Tomas'],
-    '9C': ['Mariana B','Sara Sofia','Juan Sebastián','Alejandro','Isabella F','Jeronimo','Matias','Lucia','Belen','Isabella L 9C Dianita','Sara','Ana Lucia','Maria Jose','Juan Diego','Mariana T','Pablo','Emmanuel','David','Catalina']
+    '9B': ['Antonia C','Elena','Samuel','Maria Antonia','Ana Lucía','Santiago','Julieta','Gabriela','Jose Jacobo','Antonia A','Mariana','Matías','Valentina','Juana','Salomon','Jacobo O','Sofia','Jacobo P','Tomas'],
+    '9C': ['Mariana B','Sara Sofia','Juan Sebastián','Alejandro','Isabella F','Jeronimo','Matias','Lucia','Belen','Isabella L 9C Dianita','Sara','Antonia G','Maria Jose','Juan Diego','Mariana T','Pablo','Emmanuel','David','Catalina']
   };
   for (const [grade, names] of Object.entries(updated)) {
     if (GROUPS[grade]?.length !== names.length) throw Error(`Roster length mismatch in ${grade}`);
