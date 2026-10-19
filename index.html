@@ -3,48 +3,164 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#132d36">
-  <meta name="robots" content="noindex,nofollow">
-  <title>Grade 9 · Hexagonal Seating Studio</title>
+  <meta name="theme-color" content="#16353d">
+  <meta name="description" content="A browser-local hexagonal classroom seating planner for teachers.">
+  <title>Classroom Seating Studio · Tech-GLM</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="floor-points.css">
   <script src="app.js" defer></script>
-  <script src="floor-points.js" defer></script>
-  <script src="roster-v4.js" defer></script>
 </head>
 <body>
 <header class="topbar">
-  <div class="brand"><span class="brand-mark" aria-hidden="true">⬡</span><div><small>GLM · TEACHER WORKSPACE</small><strong>Seating Studio</strong></div></div>
-  <div class="top-actions"><span class="privacy">● Teacher-only · browser-local plans</span><button type="button" class="button ghost" id="printBtn">Print map</button><button type="button" class="button bright" id="exportBtn">Export backup</button></div>
-</header>
-<main class="app-shell">
-  <section class="intro"><div><p class="eyebrow">CLASSROOM · GRADE NINE</p><h1>Shape the room. Place the students.</h1><p class="subtitle">Arrange desk spots in rows and columns, then fine-tune their positions inside the hexagon. Each class has its own map and seating plan.</p></div>
-    <div class="group-switcher" role="group" aria-label="Choose class"><button class="group active" data-group="9A" aria-pressed="true">9A</button><button class="group" data-group="9B" aria-pressed="false">9B</button><button class="group" data-group="9C" aria-pressed="false">9C</button></div>
-  </section>
-  <section class="layout-tools" aria-label="Desk spot layout editor">
-    <div class="layout-heading"><div><span class="section-kicker">01 / CONFIGURE SPOTS</span><h2>Set up your desk layout</h2><p>Choose a grid, then switch on <strong>Move desks</strong> to drag individual spots. The numbers stay with the assigned students.</p></div><span class="dimension-chip">⬡ Each wall ≈ 6 m · schematic</span></div>
-    <form id="gridForm" class="grid-form">
-      <label>Rows <input id="rowsInput" name="rows" type="number" min="1" max="8" step="1" required></label>
-      <label>Columns <input id="colsInput" name="cols" type="number" min="1" max="8" step="1" required></label>
-      <label>Desk spots <input id="spotsInput" name="spots" type="number" min="1" max="40" step="1" required></label>
-      <button type="submit" class="button bright" id="applyGridBtn">Apply grid</button>
-      <button type="button" class="button subtle" id="moveDesksBtn" aria-pressed="false">Move desks: off</button>
-      <button type="button" class="button subtle" id="resetGridBtn">Align to grid</button>
-    </form>
-    <p class="layout-help" id="layoutHelp">A 4 × 5 grid holds 20 spots. You can use fewer spots than the available cells; an incomplete row is centered.</p>
-  </section>
-  <div class="workspace">
-    <section class="room-panel" aria-label="Classroom seating map">
-      <div class="panel-heading"><div><span class="section-kicker">02 / CLASSROOM MAP</span><h2><span id="roomGroup">9A</span> classroom</h2></div><div class="capacity"><span id="placedCount">0</span><span class="slash">/</span><span id="totalCount">20</span> seated · <span id="spotTotal">20</span> spots</div></div>
-      <div class="map-scroll"><div class="map-scale">Approximate six-sided room · board is at the bottom of the diagram</div><div id="room" class="room" aria-label="Hexagonal classroom; board at bottom; doors marked by group"><span class="wall-length wall-length-top">≈ 6 m</span><span class="room-label rear-label">BACK</span><div class="door door-top" id="doorTop">DOOR · 9B / 9C</div><div class="door door-bottom" id="doorBottom">DOOR · 9A</div><div class="board" id="board">BOARD · FRONT</div><div id="desks" class="desks"></div></div></div>
-      <div class="map-footer"><span><span class="legend-dot assigned"></span> Occupied</span><span><span class="legend-dot empty"></span> Free spot</span><span id="mapHint" class="helper">Drag a name onto a spot, or select a name and tap a spot.</span></div>
-      <p class="safety-note">Room outline and door positions follow the supplied sketch. Desk sizes and clearances are schematic; check real furniture, exits, and walking space before use.</p>
-    </section>
-    <aside class="roster-panel" aria-label="Student roster"><div class="panel-heading"><div><span class="section-kicker">03 / STUDENT ROSTER</span><h2>Names to place</h2></div><span class="count-bubble" id="waitingCount">20 left</span></div><label class="search-label" for="search">Find a student</label><input id="search" type="search" autocomplete="off" placeholder="Search names…"><label class="show-all"><input id="showAll" type="checkbox"> Show seated students too</label><div class="roster" id="roster" aria-live="polite"></div><div class="roster-footer"><p id="selectionHint">Select a student and choose a desk.</p><button type="button" class="button subtle" id="clearSelectionBtn">Cancel selection</button></div></aside>
+  <div class="brand">
+    <span class="brand-mark" aria-hidden="true">⬡</span>
+    <div><small>TECH-GLM · TEACHER TOOL</small><strong>Classroom Seating Studio</strong></div>
   </div>
-  <section class="bottom-tools"><div><span class="section-kicker">SAVE & RESET</span><p>Each group’s geometry and names are saved in this browser. Export a backup to transfer to another device.</p></div><div class="tool-buttons"><button type="button" class="button subtle" id="importBtn">Import backup</button><button type="button" class="button subtle" id="clearBtn">Clear this group’s names</button></div><input id="importInput" type="file" accept="application/json,.json" hidden></section>
+  <div class="top-actions">
+    <span class="privacy">● Data stays in this browser</span>
+    <button class="button ghost" id="printBtn" type="button">Print map</button>
+    <button class="button bright" id="exportBtn" type="button">Export backup</button>
+  </div>
+</header>
+
+<main class="app-shell">
+  <section class="intro">
+    <div>
+      <p class="eyebrow">HEXAGONAL CLASSROOM PLANNER</p>
+      <h1>Build a course. Shape the room. Place the students.</h1>
+      <p class="subtitle">Create any course, paste a roster, arrange desk spots, and keep separate seating plans on this device. No student names are stored in the GitHub source.</p>
+    </div>
+    <div class="course-toolbar">
+      <label for="courseSelect">Course</label>
+      <select id="courseSelect" aria-label="Choose course"></select>
+      <button class="button bright" id="newCourseBtn" type="button">+ New course</button>
+      <button class="button subtle" id="editCourseBtn" type="button">Edit roster</button>
+      <button class="button danger-soft" id="deleteCourseBtn" type="button">Delete</button>
+    </div>
+  </section>
+
+  <section id="emptyState" class="empty-state" hidden>
+    <div class="empty-icon">⬡</div>
+    <h2>Create your first course</h2>
+    <p>Give the course a name and paste the student roster. One name per line works best.</p>
+    <button class="button bright" id="emptyNewCourseBtn" type="button">Create a course</button>
+  </section>
+
+  <div id="planner" hidden>
+    <section class="layout-tools" aria-label="Desk layout editor">
+      <div class="layout-heading">
+        <div>
+          <span class="section-kicker">01 / DESK LAYOUT</span>
+          <h2>Set up the room</h2>
+          <p>Choose rows, columns, and desk spots. Then use <strong>Move desks</strong> for fine adjustments.</p>
+        </div>
+        <span class="dimension-chip">⬡ Approx. 6 m per wall · schematic</span>
+      </div>
+      <form id="gridForm" class="grid-form">
+        <label>Rows <input id="rowsInput" type="number" min="1" max="10" step="1" required></label>
+        <label>Columns <input id="colsInput" type="number" min="1" max="10" step="1" required></label>
+        <label>Desk spots <input id="spotsInput" type="number" min="1" max="60" step="1" required></label>
+        <button class="button bright" type="submit">Apply grid</button>
+        <button class="button subtle" id="moveDesksBtn" type="button" aria-pressed="false">Move desks: off</button>
+        <button class="button subtle" id="alignGridBtn" type="button">Align to grid</button>
+      </form>
+      <p class="layout-help" id="layoutHelp"></p>
+    </section>
+
+    <section class="floor-tools" aria-label="Floor reference points">
+      <div class="floor-intro">
+        <div>
+          <span class="section-kicker">02 / FLOOR REFERENCE POINTS</span>
+          <h2>Physical alignment markers</h2>
+          <p>Use 4–8 removable A–H floor marks to help students return desks to the same places.</p>
+        </div>
+        <span class="floor-shared">Shared by every course</span>
+      </div>
+      <div class="floor-controls">
+        <label>Reference points
+          <select id="floorCount">
+            <option value="4">4 points</option><option value="5">5 points</option><option value="6" selected>6 points</option><option value="7">7 points</option><option value="8">8 points</option>
+          </select>
+        </label>
+        <button class="button subtle" id="moveFloorBtn" type="button" aria-pressed="false">Move floor points: off</button>
+        <button class="button subtle" id="resetFloorBtn" type="button">Reset floor points</button>
+      </div>
+      <p class="layout-help" id="floorHelp">Place matching A–F tape marks on the real floor after checking aisles and door access.</p>
+    </section>
+
+    <div class="workspace">
+      <section class="room-panel" aria-label="Classroom seating map">
+        <div class="panel-heading">
+          <div><span class="section-kicker">03 / CLASSROOM MAP</span><h2 id="roomCourseName">Course</h2></div>
+          <div class="capacity"><span id="placedCount">0</span><span class="slash">/</span><span id="studentCount">0</span> seated · <span id="spotCount">0</span> spots</div>
+        </div>
+        <div class="map-scroll">
+          <div class="map-scale">Approximate six-sided room · board at the bottom</div>
+          <div id="room" class="room" aria-label="Hexagonal classroom map">
+            <span class="wall-length wall-length-top">≈ 6 m</span>
+            <span class="room-label rear-label">BACK</span>
+            <div class="door door-top">DOOR A</div>
+            <div class="door door-bottom">DOOR B</div>
+            <div class="board">BOARD · FRONT</div>
+            <div id="floorLayer" class="floor-reference-layer" aria-label="Floor reference points"></div>
+            <div id="desks" class="desks"></div>
+          </div>
+        </div>
+        <div class="map-footer">
+          <span><span class="legend-dot assigned"></span> Occupied</span>
+          <span><span class="legend-dot empty"></span> Free spot</span>
+          <span><span class="legend-dot floor"></span> Floor mark</span>
+          <span id="mapHint" class="helper">Select a student or drag a name onto a desk.</span>
+        </div>
+        <div id="floorKey" class="floor-reference-key"></div>
+        <p class="safety-note">This is a planning diagram, not a safety or accessibility certification. Verify actual desk size, walking space, accessible paths, and door clearance in the room.</p>
+      </section>
+
+      <aside class="roster-panel" aria-label="Student roster">
+        <div class="panel-heading">
+          <div><span class="section-kicker">04 / ROSTER</span><h2>Students</h2></div>
+          <span class="count-bubble" id="waitingCount">0 left</span>
+        </div>
+        <label class="search-label" for="search">Find a student</label>
+        <input id="search" type="search" autocomplete="off" placeholder="Search names…">
+        <label class="show-all"><input id="showAll" type="checkbox"> Show seated students too</label>
+        <div id="roster" class="roster" aria-live="polite"></div>
+        <div class="roster-footer">
+          <p id="selectionHint">Select a student and choose a desk.</p>
+          <button class="button subtle" id="clearSelectionBtn" type="button">Cancel selection</button>
+        </div>
+      </aside>
+    </div>
+
+    <section class="bottom-tools">
+      <div><span class="section-kicker">SAVE & TRANSFER</span><p>Autosaved locally. Backups contain course names and student names, so store exported JSON in an approved location.</p></div>
+      <div class="tool-buttons">
+        <button class="button subtle" id="importBtn" type="button">Import backup</button>
+        <button class="button subtle" id="clearSeatsBtn" type="button">Clear seating</button>
+      </div>
+      <input id="importInput" type="file" accept="application/json,.json" hidden>
+    </section>
+  </div>
 </main>
-<div class="toast" role="status" aria-live="polite" id="toast"></div>
-<footer class="footer">Teacher use only · This public source contains student names. Browser storage does not sync between devices.</footer>
+
+<dialog id="courseDialog" class="course-dialog">
+  <form id="courseForm" method="dialog">
+    <div class="dialog-heading">
+      <div><span class="section-kicker" id="dialogKicker">NEW COURSE</span><h2 id="dialogTitle">Create a course</h2></div>
+      <button class="icon-button" id="dialogCloseBtn" type="button" aria-label="Close">×</button>
+    </div>
+    <label class="field">Course name
+      <input id="courseNameInput" maxlength="80" required placeholder="e.g. 9A Technology">
+    </label>
+    <label class="field">Student roster
+      <textarea id="rosterInput" rows="13" placeholder="One student per line&#10;Isabella&#10;Martin&#10;Maria Adelaida"></textarea>
+    </label>
+    <p class="dialog-note">Recommended: one student per line. A single comma-separated line also works. Duplicate names are kept and numbered automatically in the planner.</p>
+    <div class="dialog-summary"><span id="rosterPreviewCount">0 students</span><span id="duplicateNotice"></span></div>
+    <div class="dialog-actions"><button class="button subtle" id="dialogCancelBtn" type="button">Cancel</button><button class="button bright" id="saveCourseBtn" type="submit">Save course</button></div>
+  </form>
+</dialog>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<footer class="footer">Tech-GLM Classroom Seating Studio · No roster is embedded in the public source · Browser-local by design</footer>
 </body>
 </html>
